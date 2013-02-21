@@ -1011,13 +1011,12 @@ class Connection(object):
                 if self.attempts > self.retries:
                     raise
                 self.http_conn = None
+                self.url = self.token = None
             except ClientException, err:
                 if self.attempts > self.retries:
                     raise
                 if err.http_status == 401:
                     self.url = self.token = None
-                    if self.attempts > 1:
-                        raise
                 elif err.http_status == 408:
                     self.http_conn = None
                 elif 500 <= err.http_status <= 599:
